@@ -65,6 +65,8 @@ CREATE TABLE activity_logs(
   CONSTRAINT check_action CHECK (action IN ('IN', 'OUT', 'OPEN', 'CLOSE'))
 );
 
+DELIMITER //
+
 CREATE TRIGGER after_student_locations_insert
     AFTER INSERT ON student_locations FOR EACH ROW
 
@@ -74,7 +76,7 @@ CREATE TRIGGER after_student_locations_insert
     VALUES
     (NEW.student_id, NEW.location_id, 'IN');
 
-    END;
+    END //
 
 CREATE TRIGGER before_student_locations_delete
     BEFORE DELETE ON student_locations FOR EACH ROW
@@ -85,4 +87,6 @@ CREATE TRIGGER before_student_locations_delete
     VALUES
     (OLD.student_id, OLD.location_id, 'OUT');
 
-    END;
+    END //
+
+DELIMITER ;
